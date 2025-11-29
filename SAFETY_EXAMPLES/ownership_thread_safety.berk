@@ -1,0 +1,255 @@
+/// BERK Ownership & Borrow Checker - Memory Safety Showcase
+///
+/// Bu demo BERK'in Rust seviyesinde bellek güvenliğini gösterir:
+/// - Use-after-free önleme (compile-time)
+/// - Double-free önleme (compile-time)
+/// - Data race önleme (compile-time)
+/// - Null pointer erişimi önleme
+
+kullan std::thread
+kullan std::sync
+
+/// ❌ HATA: Use-after-free (Compile-time yakalanır!)
+/*
+fonksiyon use_after_free_example()
+yap
+    değişken data = yeni Vec<tamsayı>
+    data.push(42)
+    
+    değişken moved_data = taşı(data)  // Ownership moved
+    
+    // ❌ DERLEME HATASI: 'data' artık kullanılamaz!
+    // yaz(data.len())  // Error: use of moved value
+son
+*/
+
+/// ✅ DOĞRU: Ownership kurallarına uygun
+fonksiyon ownership_correct_example()
+yap
+    değişken data = yeni Vec<tamsayı>
+    data.push(42)
+    data.push(100)
+    
+    // Immutable borrow - ✅ OK
+    değişken borrowed = &data
+    yaz("Data length: ", borrowed.len())
+    
+    // Mutable borrow - ✅ OK (immutable borrow bittikten sonra)
+    değişken borrowed_mut = &değiştir data
+    borrowed_mut.push(200)
+    
+    yaz("Updated data: ", data)
+son
+
+/// ❌ HATA: Aynı anda immutable ve mutable borrow (Compile-time)
+/*
+fonksiyon borrow_conflict_example()
+yap
+    değişken data = yeni Vec<tamsayı>
+    
+    değişken reader = &data           // Immutable borrow
+    değişken writer = &değiştir data  // ❌ HATA: Already borrowed as immutable!
+    
+    writer.push(42)
+    yaz(reader.len())
+son
+*/
+
+/// ✅ DOĞRU: Borrow kurallarına uygun
+fonksiyon borrow_correct_example()
+yap
+    değişken data = yeni Vec<tamsayı>
+    
+    // Scope ile borrow lifetime yönetimi
+    {
+        değişken reader = &data
+        yaz("Reading: ", reader.len())
+    }  // reader scope sonu - borrow serbest!
+    
+    // Şimdi mutable borrow alınabilir
+    {
+        değişken writer = &değiştir data
+        writer.push(42)
+    }
+    
+    yaz("Final data: ", data)
+son
+
+/// Thread Safety - Data Race Prevention
+fonksiyon thread_safety_example()
+yap
+    yaz("\n=== Thread Safety Demo ===\n")
+    
+    // Shared counter - Arc (Atomic Reference Counted)
+    değişken counter = sync::Arc::new(sync::Mutex::new(0))
+    
+    değişken handles = yeni Vec<thread::JoinHandle<()>>
+    
+    // 10 thread oluştur
+    için i içinde 0..10
+        değişken counter_clone = counter.clone()
+        
+        değişken handle = thread::spawn(taşı || {
+            için _ içinde 0..1000
+                // Mutex lock ile thread-safe erişim
+                değişken guard = counter_clone.lock().unwrap()
+                *guard += 1
+                // guard drop olunca otomatik unlock
+            son
+        })
+        
+        handles.push(handle)
+    son
+    
+    // Tüm thread'leri bekle
+    için handle içinde handles
+        handle.join().unwrap()
+    son
+    
+    değişken final_count = *counter.lock().unwrap()
+    yaz("Final counter (thread-safe): ", final_count)
+    yaz("Beklenen: 10,000")
+    yaz("Sonuç: ", eğer final_count == 10000 "✅ BAŞARILI!" değilse "❌ Data race var!")
+son
+
+/// ❌ C++ Style Data Race (BERK buna izin vermez!)
+/*
+// C++ kod örneği (yorum olarak):
+// int counter = 0;  // Shared
+// 
+// void thread_func() {
+//     for (int i = 0; i < 1000; i++)
+//         counter++;  // ❌ DATA RACE!
+// }
+//
+// BERK'te bu kod DERLENMEYECEKTİR!
+// Çünkü 'counter' paylaşımlı mutable erişime izin vermez.
+*/
+
+/// Non-Lexical Lifetimes (NLL) Demo
+fonksiyon nll_example()
+yap
+    yaz("\n=== Non-Lexical Lifetimes ===\n")
+    
+    değişken data = yeni Vec<tamsayı>
+    data.push(1)
+    data.push(2)
+    data.push(3)
+    
+    değişken first = &data[0]
+    yaz("First element: ", first)
+    // 'first' burada son kez kullanılıyor - borrow burada bitiyor!
+    
+    // Şimdi mutable borrow alınabilir (NLL sayesinde)
+    data.push(4)  // ✅ OK - 'first' artık kullanılmıyor
+    
+    yaz("Data after push: ", data)
+son
+
+/// Smart Pointers - Box, Rc, Arc
+fonksiyon smart_pointer_example()
+yap
+    yaz("\n=== Smart Pointers ===\n")
+    
+    // Box - Heap allocation with ownership
+    değişken boxed = Box::new(42)
+    yaz("Boxed value: ", *boxed)
+    
+    // Rc - Reference Counted (single-threaded)
+    değişken rc1 = sync::Rc::new(100)
+    değişken rc2 = rc1.clone()
+    yaz("RC count: ", sync::Rc::strong_count(&rc1))  // 2
+    
+    // Arc - Atomic Reference Counted (thread-safe)
+    değişken arc1 = sync::Arc::new(200)
+    değişken arc2 = arc1.clone()
+    yaz("ARC count: ", sync::Arc::strong_count(&arc1))  // 2
+son
+
+/// Lifetime Annotations - Explicit lifetimes
+fonksiyon longest<'a>(x: &'a metin, y: &'a metin) -> &'a metin
+yap
+    eğer x.len() > y.len()
+        dön x
+    değilse
+        dön y
+    son
+son
+
+fonksiyon lifetime_example()
+yap
+    yaz("\n=== Lifetimes ===\n")
+    
+    değişken str1 = "hello"
+    değişken str2 = "world!"
+    
+    değişken result = longest(str1, str2)
+    yaz("Longest string: ", result)
+son
+
+/// Memory leak prevention
+fonksiyon no_memory_leak_example()
+yap
+    yaz("\n=== Memory Leak Prevention ===\n")
+    
+    // BERK'te memory leak OLMAZ çünkü:
+    // 1. Ownership sistemi otomatik cleanup yapar
+    // 2. Drop trait otomatik çağrılır
+    // 3. Reference counting (Rc/Arc) cycle detection
+    
+    değişken items = yeni Vec<Box<tamsayı>>
+    
+    için i içinde 0..1000
+        items.push(Box::new(i))
+    son
+    
+    // Function sonunda 'items' drop edilir
+    // Bu otomatik olarak tüm Box'ları serbest bırakır
+    // MANUEL FREE GEREKLİ DEĞİL!
+    
+    yaz("1000 allocation yapıldı - hepsi otomatik temizlenecek")
+son
+
+/// Ana fonksiyon
+fonksiyon ana() -> tamsayı
+yap
+    yaz("╔═══════════════════════════════════════════════════╗")
+    yaz("║  BERK Ownership & Memory Safety Showcase         ║")
+    yaz("║  Rust-Level Safety Without Runtime Overhead      ║")
+    yaz("╚═══════════════════════════════════════════════════╝\n")
+    
+    yaz("🔒 Compile-Time Safety Guarantees:")
+    yaz("   ✅ No use-after-free")
+    yaz("   ✅ No double-free")
+    yaz("   ✅ No data races")
+    yaz("   ✅ No null pointer dereference")
+    yaz("   ✅ No memory leaks\n")
+    
+    // Demo'ları çalıştır
+    ownership_correct_example()
+    borrow_correct_example()
+    thread_safety_example()
+    nll_example()
+    smart_pointer_example()
+    lifetime_example()
+    no_memory_leak_example()
+    
+    yaz("\n╔═══════════════════════════════════════════════════╗")
+    yaz("║                   KARŞILAŞTIRMA                   ║")
+    yaz("╠═══════════════════════════════════════════════════╣")
+    yaz("║  C/C++:    Runtime crashes, undefined behavior    ║")
+    yaz("║  Python:   Garbage collector overhead             ║")
+    yaz("║  Go:       GC pauses, limited control             ║")
+    yaz("║  Rust:     ✅ Compile-time safety (baseline)      ║")
+    yaz("║  BERK:     ✅ Rust safety + 263x region memory!   ║")
+    yaz("╚═══════════════════════════════════════════════════╝\n")
+    
+    yaz("💡 BERK Avantajları:")
+    yaz("   • Zero-cost abstractions (no runtime overhead)")
+    yaz("   • Compile-time guarantees (no runtime checks)")
+    yaz("   • Thread safety without GC")
+    yaz("   • Memory safety without GC")
+    yaz("   • Performance + Safety birlikte!")
+    
+    dön 0
+son

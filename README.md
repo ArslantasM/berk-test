@@ -256,11 +256,10 @@ berk run demos/DUAL_LANGUAGE/sorting_algorithms.berk
 ### Prerequisites
 
 1. **BERK Compiler** (v0.9.1+)
-   - Download: https://github.com/[user]/berk-lang/releases
-   - Or build from source: https://github.com/[user]/berk-lang
+   - Download: https://github.com/ArslantasM/berk-lsp/releases/tag/v0.9.1
 
 2. **VS Code Extension** (v0.4.1+) - Optional but recommended
-   - Download: https://github.com/[user]/berk-vscode/releases
+   - Download: https://marketplace.visualstudio.com/items?itemName=ArslantasM-tools.berk-lang
    - Provides: Syntax highlighting, linting, formatting, LSP
 
 ### Installation

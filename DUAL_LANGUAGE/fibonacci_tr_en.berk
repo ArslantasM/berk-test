@@ -79,7 +79,7 @@ fonksiyon benchmark_fibonacci() yap
     yaz("║  Performans Karşılaştırması                       ║")
     yaz("╚═══════════════════════════════════════════════════╝\n")
     
-    değişken test_n = 35
+    değişken test_n = 25  // 35 çok yavaş (interpreter modu)
     
     // Turkish recursive - Türkçe özyinelemeli
     yaz("🇹🇷 Türkçe (Recursive / Özyinelemeli):")
@@ -160,9 +160,9 @@ function golden_ratio_demo() do
     variable golden_ratio = 1.618033988749
     
     for n in 5..15 do
-        variable fn = fibonacci_hızlı_tr(n) as real64
-        variable fn_prev = fibonacci_hızlı_tr(n - 1) as real64
-        variable ratio = fn / fn_prev
+        variable fib_n = fibonacci_hızlı_tr(n) as real64
+        variable fib_prev = fibonacci_hızlı_tr(n - 1) as real64
+        variable ratio = fib_n / fib_prev
         variable error = abs(ratio - golden_ratio)
         
         yaz("   F(", n, ")/F(", n-1, ") = ", ratio, "  (error: ", error, ")")

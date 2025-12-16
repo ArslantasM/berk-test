@@ -48,6 +48,16 @@ demos/
 │   ├── EN_03_stm32.berk
 │   └── EN_04_riscv.berk
 │
+├── HARDWARE_BRIDGE (Hardware Required)/    # USB/Serial Hardware Communication (NEW!)
+│   ├── 01_serial.berk
+│   ├── 02_firmata.berk
+│   ├── 03_modbus.berk
+│   ├── 04_slip.berk
+│   ├── 05_binproto.berk
+│   ├── 06_arduino_led.berk
+│   ├── 07_sensor_reading.berk
+│   └── 08_robot_arm.berk
+│
 ├── LIBRARY/            # Standard Library showcase
 │   ├── 01_math.berk
 │   ├── 02_string.berk
@@ -55,6 +65,12 @@ demos/
 │   ├── 04_io.berk
 │   ├── 05_time.berk
 │   ├── 06_json.berk
+│   ├── 07_crypto.berk        # NEW
+│   ├── 08_compression.berk   # NEW
+│   ├── 09_network.berk       # NEW
+│   ├── 10_audio.berk         # NEW
+│   ├── 11_graphics.berk      # NEW
+│   ├── 12_testing.berk       # NEW
 │   ├── EN_01_math.berk
 │   ├── EN_02_string.berk
 │   ├── EN_03_collections.berk
@@ -66,10 +82,28 @@ demos/
 │   ├── fibonacci_demo.berk
 │   └── fibonacci_tr_en.berk
 │
+├── DDS/                # Data Distribution Service demos
+│   ├── 01_ilk_dds.berk
+│   ├── 02_qos_profilleri.berk
+│   ├── 03_akilli_ev.berk
+│   ├── 04_trafik_izleme.berk
+│   ├── 05_otonom_arac.berk
+│   ├── 06_fabrika_otomasyon.berk
+│   ├── 07_drone_filosu.berk
+│   └── README.md
+│
+├── HPC_Mode/           # High-Performance Computing demos
+│   ├── hpc_basic_demo.berk
+│   ├── hpc_pubsub_demo.berk
+│   ├── hpc_benchmark_demo.berk
+│   ├── hpc_robot_control.berk
+│   ├── hpc_sensor_fusion.berk
+│   └── hpc_config_profiles.berk
+│
 ├── run_tests.ps1       # Test runner script
 └── README.md           # This file
 ```
-**Total: 40 demos** (20 Turkish + 20 English)
+**Total: 53 demos** (20 Turkish + 20 English + 7 DDS + 6 HPC)
 ---
 ##  Demo Categories
 ###  BEGINNER (6 demos)
@@ -177,6 +211,55 @@ function fibonacci_en(n: integer) -> integer do
 end
 ```
 ---
+
+###  DDS - Data Distribution Service (7 demos)
+Real-time publish/subscribe messaging with Turkish syntax.
+
+| Demo | Description |
+|------|-------------|
+| `01_ilk_dds.berk` | İlk DDS uygulaması - Temel kavramlar |
+| `02_qos_profilleri.berk` | QoS profilleri ve kullanımları |
+| `03_akilli_ev.berk` | Akıllı ev otomasyon senaryosu |
+| `04_trafik_izleme.berk` | Şehir trafik izleme sistemi |
+| `05_otonom_arac.berk` | Otonom araç sensör füzyonu |
+| `06_fabrika_otomasyon.berk` | Endüstri 4.0 fabrika otomasyonu |
+| `07_drone_filosu.berk` | Çoklu drone koordinasyonu |
+
+**Turkish DDS Keywords:** `katılımcı`, `konu`, `yayıncı`, `abone`, `güvenilir`, `elinden_gelen`
+
+**Run:**
+```bash
+berk-lang run demos/DDS/01_ilk_dds.berk
+berk-lang run demos/DDS/05_otonom_arac.berk
+```
+
+---
+
+###  HPC_Mode - High-Performance Computing (6 demos)
+Ultra-low latency real-time systems with 307+ M ops/sec throughput.
+
+| Demo | Description |
+|------|-------------|
+| `hpc_basic_demo.berk` | HPC temel kavramları |
+| `hpc_pubsub_demo.berk` | Yüksek performanslı pub/sub |
+| `hpc_benchmark_demo.berk` | Performans benchmark'ları |
+| `hpc_robot_control.berk` | Robot kontrol sistemi |
+| `hpc_sensor_fusion.berk` | Sensör füzyon pipeline |
+| `hpc_config_profiles.berk` | Konfigürasyon profilleri |
+
+**Performance Targets:**
+- Throughput: 307+ M ops/sec
+- Latency P99.99: < 10 μs
+- Zero Allocation: Guaranteed
+
+**Run:**
+```bash
+berk-lang run demos/HPC_Mode/hpc_basic_demo.berk
+berk-lang run demos/HPC_Mode/hpc_benchmark_demo.berk
+```
+
+---
+
 ##  Quick Start
 ### Prerequisites
 1. **BERK Compiler** (v1.0.0+)
@@ -317,6 +400,38 @@ BERK compiler: GPL-3.0
 3. **Read the docs** - Learn advanced features
 4. **Build something** - Share your project!
 ---
+
+##  Troubleshooting
+
+### PowerShell'de Türkçe Karakter Sorunu
+
+REPL'i pipe (`|`) ile kullanırken Türkçe karakterler (ş, ğ, ü, ö, ı, ç) veya emojiler bozuk görünebilir.
+
+**Neden:** PowerShell varsayılan olarak UTF-16 encoding kullanır, ancak BERK UTF-8 çıktı üretir.
+
+**Çözümler:**
+
+1. **Önerilen:** Doğrudan `berk-lang.exe run` kullanın:
+   ```powershell
+   berk-lang.exe run demos/BEGINNER/01_hello_world.berk
+   ```
+
+2. **REPL için:** Encoding'i ayarlayın:
+   ```powershell
+   [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+   [Console]::InputEncoding = [System.Text.Encoding]::UTF8
+   echo '%run file.berk' | berk-repl.exe
+   ```
+
+3. **Kalıcı çözüm:** PowerShell profilinize (`$PROFILE`) ekleyin:
+   ```powershell
+   # BERK UTF-8 support
+   [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+   [Console]::InputEncoding = [System.Text.Encoding]::UTF8
+   ```
+
+---
+
 ##  Support
 - **GitHub Issues:** https://github.com/ArslantasM/berk-test/issues
 - **Email:** arslantas.m@gmail.com

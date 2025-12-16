@@ -14,60 +14,60 @@ BERK is a modern systems programming language that delivers:
 ##  Demo Structure
 ```
 demos/
-├── BEGINNER/           #  Getting started demos
+├── BEGINNER/           # Getting started demos
 │   ├── 01_hello_world.berk
-│   ├── 02_variables.berk
+│   ├── 02_control_structures.berk
 │   ├── 03_functions.berk
 │   ├── EN_01_hello_world.berk
-│   ├── EN_02_variables.berk
+│   ├── EN_02_control_structures.berk
 │   └── EN_03_functions.berk
 │
-├── INTERMEDIATE/       #  Core language features
-│   ├── 01_collections.berk
-│   ├── 02_error_handling.berk
-│   ├── 03_pattern_matching.berk
-│   ├── EN_01_collections.berk
-│   ├── EN_02_error_handling.berk
-│   └── EN_03_pattern_matching.berk
+├── INTERMEDIATE/       # Core language features
+│   ├── 01_arrays_strings.berk
+│   ├── 02_data_structures.berk
+│   ├── 03_modules.berk
+│   ├── EN_01_arrays_strings.berk
+│   ├── EN_02_data_structures.berk
+│   └── EN_03_modules.berk
 │
-├── EXPERT/             #  Advanced concepts
-│   ├── 01_memory_regions.berk
-│   ├── 02_ownership.berk
-│   ├── 03_concurrency.berk
-│   ├── EN_01_memory_regions.berk
-│   ├── EN_02_ownership.berk
-│   └── EN_03_concurrency.berk
+├── EXPERT/             # Advanced concepts
+│   ├── 01_algorithms.berk
+│   ├── 02_embedded_systems.berk
+│   ├── 03_database.berk
+│   ├── EN_01_algorithms.berk
+│   ├── EN_02_embedded_systems.berk
+│   └── EN_03_database.berk
 │
-├── HAL/                #  Hardware Abstraction Layer
-│   ├── 01_gpio_basics.berk
-│   ├── 02_uart_serial.berk
-│   ├── 03_spi_communication.berk
-│   ├── 04_i2c_sensors.berk
-│   ├── EN_01_gpio_basics.berk
-│   ├── EN_02_uart_serial.berk
-│   ├── EN_03_spi_communication.berk
-│   └── EN_04_i2c_sensors.berk
+├── HAL/                # Hardware Abstraction Layer
+│   ├── 01_arduino.berk
+│   ├── 02_esp32.berk
+│   ├── 03_stm32.berk
+│   ├── 04_riscv.berk
+│   ├── EN_01_arduino.berk
+│   ├── EN_02_esp32.berk
+│   ├── EN_03_stm32.berk
+│   └── EN_04_riscv.berk
 │
-├── LIBRARY/            #  Standard Library showcase
-│   ├── 01_math_demo.berk
-│   ├── 02_string_demo.berk
-│   ├── 03_file_io_demo.berk
-│   ├── 04_json_demo.berk
-│   ├── 05_regex_demo.berk
-│   ├── 06_datetime_demo.berk
-│   ├── EN_01_math_demo.berk
-│   ├── EN_02_string_demo.berk
-│   ├── EN_03_file_io_demo.berk
-│   ├── EN_04_json_demo.berk
-│   ├── EN_05_regex_demo.berk
-│   └── EN_06_datetime_demo.berk
+├── LIBRARY/            # Standard Library showcase
+│   ├── 01_math.berk
+│   ├── 02_string.berk
+│   ├── 03_collections.berk
+│   ├── 04_io.berk
+│   ├── 05_time.berk
+│   ├── 06_json.berk
+│   ├── EN_01_math.berk
+│   ├── EN_02_string.berk
+│   ├── EN_03_collections.berk
+│   ├── EN_04_io.berk
+│   ├── EN_05_time.berk
+│   └── EN_06_json.berk
 │
-├── DUAL_LANGUAGE/      #  Turkish + English syntax
-│   ├── fibonacci_tr_en.berk
-│   └── sorting_algorithms.berk
+├── DUAL_LANGUAGE/      # Turkish + English syntax
+│   ├── fibonacci_demo.berk
+│   └── fibonacci_tr_en.berk
 │
-├── run_tests.ps1       #  Test runner script
-└── README.md           #  This file
+├── run_tests.ps1       # Test runner script
+└── README.md           # This file
 ```
 **Total: 40 demos** (20 Turkish + 20 English)
 ---
@@ -77,7 +77,7 @@ Perfect for learning BERK basics.
 | Demo | Turkish | English | Description |
 |------|---------|---------|-------------|
 | Hello World | `01_hello_world.berk` | `EN_01_hello_world.berk` | First program, print output |
-| Variables | `02_variables.berk` | `EN_02_variables.berk` | Data types, variables, constants |
+| Control Structures | `02_control_structures.berk` | `EN_02_control_structures.berk` | If/else, loops, conditions |
 | Functions | `03_functions.berk` | `EN_03_functions.berk` | Functions, parameters, return values |
 **Run:**
 ```bash
@@ -89,40 +89,40 @@ berk-lang run demos/BEGINNER/EN_01_hello_world.berk
 Core language features for real applications.
 | Demo | Turkish | English | Description |
 |------|---------|---------|-------------|
-| Collections | `01_collections.berk` | `EN_01_collections.berk` | Lists, arrays, dictionaries |
-| Error Handling | `02_error_handling.berk` | `EN_02_error_handling.berk` | Option, Result, error propagation |
-| Pattern Matching | `03_pattern_matching.berk` | `EN_03_pattern_matching.berk` | Match expressions, destructuring |
+| Arrays & Strings | `01_arrays_strings.berk` | `EN_01_arrays_strings.berk` | Arrays, strings, manipulation |
+| Data Structures | `02_data_structures.berk` | `EN_02_data_structures.berk` | Lists, maps, sets |
+| Modules | `03_modules.berk` | `EN_03_modules.berk` | Module system, imports |
 **Run:**
 ```bash
-berk-lang run demos/INTERMEDIATE/01_collections.berk
-berk-lang run demos/INTERMEDIATE/EN_01_collections.berk
+berk-lang run demos/INTERMEDIATE/01_arrays_strings.berk
+berk-lang run demos/INTERMEDIATE/EN_01_arrays_strings.berk
 ```
 ---
 ###  EXPERT (6 demos)
 Advanced concepts for systems programming.
 | Demo | Turkish | English | Description |
 |------|---------|---------|-------------|
-| Memory Regions | `01_memory_regions.berk` | `EN_01_memory_regions.berk` | 263x faster allocation |
-| Ownership | `02_ownership.berk` | `EN_02_ownership.berk` | Borrow checker, lifetimes |
-| Concurrency | `03_concurrency.berk` | `EN_03_concurrency.berk` | Threads, channels, async |
+| Algorithms | `01_algorithms.berk` | `EN_01_algorithms.berk` | Sorting, searching, optimization |
+| Embedded Systems | `02_embedded_systems.berk` | `EN_02_embedded_systems.berk` | Low-level programming |
+| Database | `03_database.berk` | `EN_03_database.berk` | SQL, CRUD operations |
 **Run:**
 ```bash
-berk-lang run demos/EXPERT/01_memory_regions.berk
-berk-lang run demos/EXPERT/EN_01_memory_regions.berk
+berk-lang run demos/EXPERT/01_algorithms.berk
+berk-lang run demos/EXPERT/EN_01_algorithms.berk
 ```
 ---
 ###  HAL - Hardware Abstraction Layer (8 demos)
 Embedded systems and hardware programming.
 | Demo | Turkish | English | Description |
 |------|---------|---------|-------------|
-| GPIO Basics | `01_gpio_basics.berk` | `EN_01_gpio_basics.berk` | Digital I/O, LED control |
-| UART Serial | `02_uart_serial.berk` | `EN_02_uart_serial.berk` | Serial communication |
-| SPI Communication | `03_spi_communication.berk` | `EN_03_spi_communication.berk` | SPI bus, peripherals |
-| I2C Sensors | `04_i2c_sensors.berk` | `EN_04_i2c_sensors.berk` | I2C protocol, sensor reading |
+| Arduino | `01_arduino.berk` | `EN_01_arduino.berk` | Arduino GPIO, LED, sensors |
+| ESP32 | `02_esp32.berk` | `EN_02_esp32.berk` | ESP32 WiFi, Bluetooth |
+| STM32 | `03_stm32.berk` | `EN_03_stm32.berk` | STM32 peripherals |
+| RISC-V | `04_riscv.berk` | `EN_04_riscv.berk` | RISC-V architecture |
 **Run:**
 ```bash
-berk-lang run demos/HAL/01_gpio_basics.berk
-berk-lang run demos/HAL/EN_01_gpio_basics.berk
+berk-lang run demos/HAL/01_arduino.berk
+berk-lang run demos/HAL/EN_01_arduino.berk
 ```
 **Supported Platforms:**
 - STM32 (F4, F7, H7 series)
@@ -135,29 +135,29 @@ berk-lang run demos/HAL/EN_01_gpio_basics.berk
 Demonstrating BERK's 2900+ standard library functions.
 | Demo | Turkish | English | Modules Used |
 |------|---------|---------|--------------|
-| Math | `01_math_demo.berk` | `EN_01_math_demo.berk` | `std::math`, trigonometry, constants |
-| String | `02_string_demo.berk` | `EN_02_string_demo.berk` | `std::string`, manipulation |
-| File I/O | `03_file_io_demo.berk` | `EN_03_file_io_demo.berk` | `std::io`, file operations |
-| JSON | `04_json_demo.berk` | `EN_04_json_demo.berk` | `std::json`, parsing |
-| Regex | `05_regex_demo.berk` | `EN_05_regex_demo.berk` | `std::regex`, patterns |
-| DateTime | `06_datetime_demo.berk` | `EN_06_datetime_demo.berk` | `std::time`, dates |
+| Math | `01_math.berk` | `EN_01_math.berk` | `std::math`, trigonometry, constants |
+| String | `02_string.berk` | `EN_02_string.berk` | `std::string`, manipulation |
+| Collections | `03_collections.berk` | `EN_03_collections.berk` | `std::collections`, lists, maps |
+| I/O | `04_io.berk` | `EN_04_io.berk` | `std::io`, file operations |
+| Time | `05_time.berk` | `EN_05_time.berk` | `std::time`, dates |
+| JSON | `06_json.berk` | `EN_06_json.berk` | `std::json`, parsing |
 **Run:**
 ```bash
-berk-lang run demos/LIBRARY/01_math_demo.berk
-berk-lang run demos/LIBRARY/EN_01_math_demo.berk
+berk-lang run demos/LIBRARY/01_math.berk
+berk-lang run demos/LIBRARY/EN_01_math.berk
 ```
 ---
 ###  DUAL_LANGUAGE (2 demos)
 BERK's unique feature: write in Turkish, English, or both!
 | Demo | Description |
 |------|-------------|
+| `fibonacci_demo.berk` | Fibonacci with performance benchmark |
 | `fibonacci_tr_en.berk` | Same algorithm in TR, EN, and mixed syntax |
-| `sorting_algorithms.berk` | Multiple sorting algorithms in mixed syntax |
 **Key Point:** ALL versions compile to **identical machine code** - zero overhead!
 **Run:**
 ```bash
+berk-lang run demos/DUAL_LANGUAGE/fibonacci_demo.berk
 berk-lang run demos/DUAL_LANGUAGE/fibonacci_tr_en.berk
-berk-lang run demos/DUAL_LANGUAGE/sorting_algorithms.berk
 ```
 **Example code:**
 ```rust
@@ -222,18 +222,18 @@ Passed: 40/40 (100%)
 ##  Learning Path
 ### Week 1: Basics
 1. `BEGINNER/01_hello_world.berk` - First program
-2. `BEGINNER/02_variables.berk` - Data types
+2. `BEGINNER/02_control_structures.berk` - Control flow
 3. `BEGINNER/03_functions.berk` - Functions
 ### Week 2: Core Features
-4. `INTERMEDIATE/01_collections.berk` - Data structures
-5. `INTERMEDIATE/02_error_handling.berk` - Error handling
-6. `INTERMEDIATE/03_pattern_matching.berk` - Pattern matching
+4. `INTERMEDIATE/01_arrays_strings.berk` - Arrays & strings
+5. `INTERMEDIATE/02_data_structures.berk` - Data structures
+6. `INTERMEDIATE/03_modules.berk` - Module system
 ### Week 3: Advanced
-7. `EXPERT/01_memory_regions.berk` - Memory management
-8. `EXPERT/02_ownership.berk` - Ownership system
-9. `EXPERT/03_concurrency.berk` - Concurrency
+7. `EXPERT/01_algorithms.berk` - Algorithms
+8. `EXPERT/02_embedded_systems.berk` - Embedded systems
+9. `EXPERT/03_database.berk` - Database operations
 ### Week 4: Specialization
-10. `HAL/*` - Embedded systems
+10. `HAL/*` - Hardware programming
 11. `LIBRARY/*` - Standard library mastery
 12. `DUAL_LANGUAGE/*` - Bilingual programming
 ---

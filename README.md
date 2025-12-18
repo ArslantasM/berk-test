@@ -1,6 +1,14 @@
-# BERK Demo Package
+# BERK Test Suite
+
+[![Core CI](https://github.com/ArslantasM/berk-test/actions/workflows/core.yml/badge.svg)](https://github.com/ArslantasM/berk-test/actions/workflows/core.yml)
+[![Language Tests](https://github.com/ArslantasM/berk-test/actions/workflows/language.yml/badge.svg)](https://github.com/ArslantasM/berk-test/actions/workflows/language.yml)
+[![Experimental](https://github.com/ArslantasM/berk-test/actions/workflows/experimental.yml/badge.svg)](https://github.com/ArslantasM/berk-test/actions/workflows/experimental.yml)
+
+> CI is running under active development; temporary test failures are expected during core refactoring. See [IMPORTANT NOTICE](IMPORTANT%20NOTICE.md) for details.
+
 **Production-Ready Systems Programming with Breakthrough Performance**
-This demo package showcases BERK's unique capabilities through hands-on, runnable examples. Each demo is self-contained and demonstrates quantifiable technical advantages.
+
+This test suite showcases BERK's unique capabilities through hands-on, runnable examples. Each test is self-contained and demonstrates quantifiable technical advantages.
 ---
 ##  What is BERK?
 BERK is a modern systems programming language that delivers:

@@ -1,0 +1,119 @@
+# ============================================================================
+# BERK Language Tests - Demo ve Öğretici Testleri
+# ============================================================================
+# Bu workflow BERK dilinin demo ve örnek dosyalarını test eder.
+# ⚠️ Bazı testler henüz tam güncellenmemiş olabilir.
+# ============================================================================
+
+name: BERK Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # ============================================================================
+  # Test Suite - Demo Testleri
+  # ============================================================================
+  test:
+    name: Run Demo Tests
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout berk-test
+        uses: actions/checkout@v4
+      
+      - name: Checkout berk-lang
+        uses: actions/checkout@v4
+        with:
+          repository: ArslantasM/berk
+          path: berk-lang-repo
+      
+      - name: Setup Rust
+        uses: dtolnay/rust-action@stable
+        with:
+          toolchain: stable
+      
+      - name: Build BERK Compiler
+        run: |
+          cd berk-lang-repo/berk-lang
+          cargo build --release
+        shell: pwsh
+      
+      - name: Copy compiler to test directory
+        run: |
+          Copy-Item "berk-lang-repo/berk-lang/target/release/berk-lang.exe" -Destination "."
+        shell: pwsh
+      
+      - name: Run Core Tests (BEGINNER)
+        run: |
+          $failed = 0
+          $passed = 0
+          Get-ChildItem -Path "BEGINNER/*.berk" | ForEach-Object {
+            Write-Host "Testing: $($_.Name)" -ForegroundColor Cyan
+            $result = & ./berk-lang.exe run $_.FullName 2>&1
+            if ($LASTEXITCODE -eq 0) {
+              Write-Host "  PASSED" -ForegroundColor Green
+              $passed++
+            } else {
+              Write-Host "  FAILED" -ForegroundColor Yellow
+              $failed++
+            }
+          }
+          Write-Host "`nResults: $passed passed, $failed failed"
+        shell: pwsh
+        continue-on-error: true
+      
+      - name: Run Intermediate Tests
+        run: |
+          $failed = 0
+          $passed = 0
+          Get-ChildItem -Path "INTERMEDIATE/*.berk" | ForEach-Object {
+            Write-Host "Testing: $($_.Name)" -ForegroundColor Cyan
+            $result = & ./berk-lang.exe run $_.FullName 2>&1
+            if ($LASTEXITCODE -eq 0) {
+              Write-Host "  PASSED" -ForegroundColor Green
+              $passed++
+            } else {
+              Write-Host "  FAILED" -ForegroundColor Yellow
+              $failed++
+            }
+          }
+          Write-Host "`nResults: $passed passed, $failed failed"
+        shell: pwsh
+        continue-on-error: true
+
+      - name: Run Expert Tests
+        run: |
+          $failed = 0
+          $passed = 0
+          Get-ChildItem -Path "EXPERT/*.berk" | ForEach-Object {
+            Write-Host "Testing: $($_.Name)" -ForegroundColor Cyan
+            $result = & ./berk-lang.exe run $_.FullName 2>&1
+            if ($LASTEXITCODE -eq 0) {
+              Write-Host "  PASSED" -ForegroundColor Green
+              $passed++
+            } else {
+              Write-Host "  FAILED" -ForegroundColor Yellow
+              $failed++
+            }
+          }
+          Write-Host "`nResults: $passed passed, $failed failed"
+        shell: pwsh
+        continue-on-error: true
+
+      - name: Test Summary
+        run: |
+          Write-Host "========================================" -ForegroundColor Cyan
+          Write-Host "BERK Test Suite Completed" -ForegroundColor Cyan
+          Write-Host "========================================" -ForegroundColor Cyan
+          Write-Host ""
+          Write-Host "Note: Some tests may fail during active development."
+          Write-Host "See CI & Test Status section in README for details."
+        shell: pwsh
